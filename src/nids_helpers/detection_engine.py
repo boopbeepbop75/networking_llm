@@ -10,11 +10,13 @@ class DetectionEngine:
         self.signature_rules = self.load_signature_rules()
         self.training_data = []
 
+    # Placeholder for loading signature-based rules
+    # TODO: Implement this method
     def load_signature_rules(self):
         return {
             'syn_flood': {
                 'condition': lambda features: (
-                    features['tcp_flags'] == 2 and  # SYN flag
+                    features['tcp_flags'] == '0x002' and  # SYN flag in pyshark
                     features['packet_rate'] > 100
                 )
             },
@@ -31,23 +33,19 @@ class DetectionEngine:
 
     def detect_threats(self, features):
         threats = []
-
         # Signature-based detection
-        for rule_name, rule in self.signature_rules.items():
-            if rule['condition'](features):
-                threats.append({
-                    'type': 'signature',
-                    'rule': rule_name,
-                    'confidence': 1.0
-                })
+        #for rule_name, rule in self.signature_rules.items():
+        #    if rule['condition'](features):
+        #        threats.append({
+        #            'type': 'signature',
+        #            'rule': rule_name,
+        #            'confidence': 1.0
+        #        })
 
         # Anomaly-based detection
         feature_vector = np.array([[
-            features['packet_size'],
-            features['packet_rate'],
-            features['byte_rate']
+            item for key, item in features.items()
         ]])
-
         anomaly_score = self.anomaly_detector.score_samples(feature_vector)[0]
         if anomaly_score < -0.5:  # Threshold for anomaly detection
             threats.append({
@@ -55,5 +53,4 @@ class DetectionEngine:
                 'score': anomaly_score,
                 'confidence': min(1.0, abs(anomaly_score))
             })
-
         return threats
