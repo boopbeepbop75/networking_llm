@@ -7,3 +7,4 @@ bin
 share
 *.zip
 data
+src/nids_helpers/__pycache__
