@@ -1,6 +1,6 @@
 from scapy.all import IP, TCP
 from nids import IntrusionDetectionSystem
-import pyshark
+from nids_helpers.feature_extraction import extract_features
 
 def test_ids():
     # Create test packets to simulate various scenarios
@@ -44,8 +44,5 @@ def test_ids():
     print("\nIDS Test Completed.")
 
 if __name__ == "__main__":
-    capture = pyshark.LiveCapture()
-    capture.sniff(timeout=10)
-    pkts = [pkt for pkt in capture._packets]
-    print(len(capture))
-    capture.close()
+    df = extract_features()
+    df.to_csv("example.csv", index=False)
