@@ -3,7 +3,6 @@ from nids_helpers.traffic_analyzer import TrafficAnalyzer
 from nids_helpers.detection_engine import DetectionEngine
 from nids_helpers.alert_system import AlertSystem
 import queue
-from scapy.all import IP, TCP
 from data_loading.load_luflow import get_luflow
 
 class IntrusionDetectionSystem:

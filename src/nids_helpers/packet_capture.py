@@ -1,4 +1,3 @@
-from scapy.all import sniff, IP, TCP
 import threading
 import queue
 import pyshark
