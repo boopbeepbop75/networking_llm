@@ -8,3 +8,4 @@ share
 *.zip
 data
 src/nids_helpers/__pycache__
+ids_alerts.log
