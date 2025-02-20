@@ -16,7 +16,7 @@ Ensure you have Python installed (>=3.8). Then, clone the repository and install
 ```bash
 # Clone the repository
 git clone https://github.com/Riley94/networking_llm.git
-cd nids/src
+cd networking_llm/src
 
 # Install dependencies
 pip install -r requirements.txt
@@ -26,10 +26,28 @@ pip install -r requirements.txt
 To start the IDS, run the following command:
 
 ```bash
-python src/nids.py
+python nids.py
 ```
 
 This will initiate network packet capture and begin monitoring for threats.
+
+## Prototype Flask Application
+To interact with the LLM locally through the Flask app run the following command:
+
+```bash
+python app.py
+```
+
+and then navigate to the url displayed in the terminal.
+
+## To Expose Application Remotely
+To enable remote tunneling to the application, install ngrok according to the recommended steps for your OS, and after the application is running locally (by running the above) - run the following:
+
+```bash
+ngrok http 5000
+```
+
+and navigate to the url produced. This url will be the exposed endpoint.
 
 ## Project Structure
 ```
@@ -37,10 +55,11 @@ networking_llm/
 ├── src/
 |   ├── nids.py  # Main entrypoint
 |   ├── nids_helpers/
-│   |   ├── packet_capture.py  # Handles traffic capture
-│   |   ├── traffic_analyzer.py  # Extracts features from packets
-│   |   ├── detection_engine.py  # Implements signature and anomaly detection
-│   |   ├── alert_system.py  # Handles alerts for detected threats
+│   │   ├── packet_capture.py  # Handles traffic capture
+│   │   ├── traffic_analyzer.py  # Extracts features from packets
+│   │   ├── detection_engine.py  # Implements signature and anomaly detection
+│   │   ├── alert_system.py  # Handles alerts for detected threats
+│   ├── app.py  # Prototype LLM interaction entrypoint
 │   └── requirements.txt  # Required dependencies
 └── README.md  # Project documentation
 ```
