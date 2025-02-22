@@ -10,7 +10,10 @@ class IntrusionDetectionSystem:
         self.packet_capture = PacketCapture()
         self.traffic_analyzer = TrafficAnalyzer()
         self.detection_engine = DetectionEngine()
-        self.alert_system = AlertSystem()
+        self.alert_system = AlertSystem(
+            log_file="ids_alerts.log",
+            llm_endpoint="https://your-ngrok-url/analyze_alert"
+        )
         self.interface = interface
 
     def start(self):

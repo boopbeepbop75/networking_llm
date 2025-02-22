@@ -8,4 +8,7 @@ share
 *.zip
 data
 src/nids_helpers/__pycache__
+src/data_loading/__pycache__
+src/model/__pycache__
 ids_alerts.log
+src/nids_llm.egg-info
