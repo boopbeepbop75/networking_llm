@@ -1,8 +1,11 @@
 Flask==3.1.0
 kagglehub==0.3.9
+matplotlib==3.10.0
 numpy==2.2.3
 pandas==2.2.3
 pyshark==0.6
+Requests==2.32.3
 scikit_learn==1.6.1
+torch==2.6.0+rocm6.2.4
 tqdm==4.67.1
 transformers==4.49.0

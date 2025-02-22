@@ -16,8 +16,12 @@ Ensure you have Python installed (>=3.8). Then, clone the repository and install
 ```bash
 # Clone the repository
 git clone https://github.com/Riley94/networking_llm.git
-cd networking_llm/src
+cd networking_llm
 
+# setup.py
+pip install -e .
+
+cd src
 # Install dependencies
 pip install -r requirements.txt
 ```
@@ -49,16 +53,30 @@ ngrok http 5000
 
 and navigate to the url produced. This url will be the exposed endpoint.
 
+## To Test LLM alert explanation
+To unit test LLM alert explanation functionality, perform the above to generate the ngrok endpoint. Replace [ngrok endpoint] in the test script with the generated endpoint and run the following:
+
+```bash
+python tests/test_nids_llm.py
+```
+
+this will add to test_alerts.log with test model output.
+
 ## Project Structure
 ```
 networking_llm/
 ├── src/
 |   ├── nids.py  # Main entrypoint
+|   ├── data_loading/
+|   |   ├── load_luflow.py # loads LUFlow dataset
+|   |   ├── tools.py # handles
 |   ├── nids_helpers/
 │   │   ├── packet_capture.py  # Handles traffic capture
 │   │   ├── traffic_analyzer.py  # Extracts features from packets
 │   │   ├── detection_engine.py  # Implements signature and anomaly detection
 │   │   ├── alert_system.py  # Handles alerts for detected threats
+|   ├── tests/
+│   │   ├──test_nids_llm.py # tests LLM endpoint for alert explanation
 │   ├── app.py  # Prototype LLM interaction entrypoint
 │   └── requirements.txt  # Required dependencies
 └── README.md  # Project documentation
