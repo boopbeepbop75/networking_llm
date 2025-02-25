@@ -1,9 +1,6 @@
 import unittest
-import json
-import logging
 from datetime import datetime
 from unittest.mock import Mock, patch
-import requests
 import tempfile
 import os
 import sys
@@ -91,7 +88,6 @@ def test_live_integration(ngrok_endpoint):
     Test live integration with actual LLM endpoint
     (Run this separately from unit tests)
     """
-    from nids_helpers.alert_system import AlertSystem
     
     # Initialize with your ngrok URL
     alert_system = AlertSystem(
@@ -141,9 +137,12 @@ if __name__ == '__main__':
         print("Usage: python test_nids_llm.py <ngrok_endpoint>")
         sys.exit(1)
 
+    ngrok_endpoint = sys.argv[1]  # Extract ngrok endpoint
+    sys.argv = [sys.argv[0]]  # Reset sys.argv to prevent unittest from interpreting extra args
+
     # Run unit tests
     unittest.main(exit=False)
     
     # Run live integration test
     print("\nRunning live integration test...")
-    test_live_integration(sys.argv[1:]) # Pass ngrok endpoint
+    test_live_integration(ngrok_endpoint)
