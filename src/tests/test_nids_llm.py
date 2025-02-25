@@ -6,6 +6,7 @@ from unittest.mock import Mock, patch
 import requests
 import tempfile
 import os
+import sys
 
 from nids_helpers.alert_system import AlertSystem
 
@@ -85,7 +86,7 @@ class TestNIDSLLMIntegration(unittest.TestCase):
         self.assertIn('port_scan', log_contents)
         self.assertIn('LLM Analysis', log_contents)
 
-def test_live_integration():
+def test_live_integration(ngrok_endpoint):
     """
     Test live integration with actual LLM endpoint
     (Run this separately from unit tests)
@@ -95,7 +96,7 @@ def test_live_integration():
     # Initialize with your ngrok URL
     alert_system = AlertSystem(
         log_file="test_alerts.log",
-        llm_endpoint="[ngrok-endpoint]/analyze_alert"
+        llm_endpoint=f"{ngrok_endpoint}/analyze_alert"
     )
     
     # Test cases with varying confidence levels
@@ -133,10 +134,16 @@ def test_live_integration():
         alert_system.generate_alert(test_case['threat'], test_case['packet_info'])
         print("Alert generated, check test_alerts.log for results")
 
+
 if __name__ == '__main__':
+    # check for valid usage
+    if len(sys.argv) < 2:
+        print("Usage: python test_nids_llm.py <ngrok_endpoint>")
+        sys.exit(1)
+
     # Run unit tests
     unittest.main(exit=False)
     
     # Run live integration test
     print("\nRunning live integration test...")
-    test_live_integration()
+    test_live_integration(sys.argv[1:]) # Pass ngrok endpoint
